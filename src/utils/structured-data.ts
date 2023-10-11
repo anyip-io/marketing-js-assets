@@ -37,116 +37,114 @@ interface IHowTo {
 }
 
 export default () => {
-  document.addEventListener('DOMContentLoaded', function () {
-    // Find the existing structured data
-    const structuredDataScript = document.querySelector(
-      'script[type="application/ld+json"]'
-    ) as HTMLScriptElement;
-    const structuredData = JSON.parse(structuredDataScript.textContent || '');
+  // Find the existing structured data
+  const structuredDataScript = document.querySelector(
+    'script[type="application/ld+json"]'
+  ) as HTMLScriptElement;
+  const structuredData = JSON.parse(structuredDataScript.textContent || '');
 
-    // Find all question and answer pairs
-    const faqs = document.querySelectorAll('.faq-singel-wrapper');
-    const faqStructuredData: IFAQPage = {
-      '@type': 'FAQPage',
-      mainEntity: [],
-    };
+  // Find all question and answer pairs
+  const faqs = document.querySelectorAll('.faq-singel-wrapper');
+  const faqStructuredData: IFAQPage = {
+    '@type': 'FAQPage',
+    mainEntity: [],
+  };
 
-    faqs.forEach((faq) => {
-      const question =
-        (faq.querySelector('.faq-question') as HTMLElement).textContent
-          ?.trim()
-          .replace(/^\d+\.\s*/, '') || '';
-      const answer =
-        (faq.querySelector('.paragraph.for-faq') as HTMLElement).textContent?.trim() || '';
-
-      faqStructuredData.mainEntity.push({
-        '@type': 'Question',
-        name: question,
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: answer,
-        },
-      });
-    });
-
-    // Add the FAQPage structured data to the existing structured data
-    structuredData['@graph'].push(faqStructuredData);
-
-    // Update the structured data script in the DOM
-    structuredDataScript.textContent = JSON.stringify(structuredData);
-
-    // Get all the steps based on a consistent selector (e.g., .best-features-mini-title)
-    const steps = document.querySelectorAll('.best-features-mini-title');
-
-    // Extract the name for the HowTo schema
-    const howToNameElem = document.querySelector(
-      '.section.best-features .section-title'
-    ) as HTMLElement;
-    const howToName = howToNameElem
-      ? howToNameElem.textContent?.trim() || ''
-      : 'How to Get Started with anyIP';
-
-    const lang = document.documentElement.getAttribute('lang') || 'en';
-
-    const howToSteps: IHowToStep[] = [];
-
-    steps.forEach((stepElem: Element, index: number) => {
-      // Locate the parent that holds both the title and details for the step
-      const stepParent = stepElem.closest('.best-features-grid-wrapper') as HTMLElement;
-
-      const titleElem = stepParent.querySelector('.best-features-title') as HTMLElement;
-      const detailElem = stepParent.querySelector('.best-features-details') as HTMLElement;
-      const imgElem = stepParent.querySelector('.best-features-chart') as HTMLImageElement;
-
-      // Extracting the image URL and creating an ImageObject schema
-      let imageSchema: IImageObject = {};
-      if (imgElem) {
-        const imageUrl = imgElem.getAttribute('src');
-        imageSchema = {
-          '@type': 'ImageObject',
-          url: imageUrl,
-          contentUrl: imageUrl,
-          caption: imgElem.getAttribute('alt') || '',
-          inLanguage: lang,
-        };
-      }
-
-      // Extracting the URL to the step, anchored to the step's title
-      const stepUrl = `${window.location.href}#${titleElem.textContent
+  faqs.forEach((faq) => {
+    const question =
+      (faq.querySelector('.faq-question') as HTMLElement).textContent
         ?.trim()
-        .replace(/\s+/g, '-')
-        .replace(/[^a-z0-9-]/g, '')
-        .toLowerCase()}`;
+        .replace(/^\d+\.\s*/, '') || '';
+    const answer =
+      (faq.querySelector('.paragraph.for-faq') as HTMLElement).textContent?.trim() || '';
 
-      // Create the schema for this step
-      const stepSchema = {
-        '@type': 'HowToStep',
-        name: titleElem.textContent?.trim() || '',
-        text: detailElem.textContent?.trim() || '',
-        position: index + 1,
-        url: stepUrl,
-        image: imageSchema,
-      };
-
-      howToSteps.push(stepSchema);
+    faqStructuredData.mainEntity.push({
+      '@type': 'Question',
+      name: question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: answer,
+      },
     });
+  });
 
-    // Complete the HowTo schema
-    const howToSchema: IHowTo = {
-      '@context': 'https://schema.org',
-      '@type': 'HowTo',
-      name: howToName,
-      step: howToSteps,
+  // Add the FAQPage structured data to the existing structured data
+  structuredData['@graph'].push(faqStructuredData);
+
+  // Update the structured data script in the DOM
+  structuredDataScript.textContent = JSON.stringify(structuredData);
+
+  // Get all the steps based on a consistent selector (e.g., .best-features-mini-title)
+  const steps = document.querySelectorAll('.best-features-mini-title');
+
+  // Extract the name for the HowTo schema
+  const howToNameElem = document.querySelector(
+    '.section.best-features .section-title'
+  ) as HTMLElement;
+  const howToName = howToNameElem
+    ? howToNameElem.textContent?.trim() || ''
+    : 'How to Get Started with anyIP';
+
+  const lang = document.documentElement.getAttribute('lang') || 'en';
+
+  const howToSteps: IHowToStep[] = [];
+
+  steps.forEach((stepElem: Element, index: number) => {
+    // Locate the parent that holds both the title and details for the step
+    const stepParent = stepElem.closest('.best-features-grid-wrapper') as HTMLElement;
+
+    const titleElem = stepParent.querySelector('.best-features-title') as HTMLElement;
+    const detailElem = stepParent.querySelector('.best-features-details') as HTMLElement;
+    const imgElem = stepParent.querySelector('.best-features-chart') as HTMLImageElement;
+
+    // Extracting the image URL and creating an ImageObject schema
+    let imageSchema: IImageObject = {};
+    if (imgElem) {
+      const imageUrl = imgElem.getAttribute('src');
+      imageSchema = {
+        '@type': 'ImageObject',
+        url: imageUrl,
+        contentUrl: imageUrl,
+        caption: imgElem.getAttribute('alt') || '',
+        inLanguage: lang,
+      };
+    }
+
+    // Extracting the URL to the step, anchored to the step's title
+    const stepUrl = `${window.location.href}#${titleElem.textContent
+      ?.trim()
+      .replace(/\s+/g, '-')
+      .replace(/[^a-z0-9-]/g, '')
+      .toLowerCase()}`;
+
+    // Create the schema for this step
+    const stepSchema = {
+      '@type': 'HowToStep',
+      name: titleElem.textContent?.trim() || '',
+      text: detailElem.textContent?.trim() || '',
+      position: index + 1,
+      url: stepUrl,
+      image: imageSchema,
     };
 
-    // Append this schema to the existing structured data
-    const existingSchemaScript = document.querySelector(
-      'script[type="application/ld+json"]'
-    ) as HTMLScriptElement;
-    const existingSchema = JSON.parse(existingSchemaScript.textContent || '');
-    existingSchema['@graph'].push(howToSchema);
-
-    // Update the structured data in the document
-    existingSchemaScript.textContent = JSON.stringify(existingSchema);
+    howToSteps.push(stepSchema);
   });
+
+  // Complete the HowTo schema
+  const howToSchema: IHowTo = {
+    '@context': 'https://schema.org',
+    '@type': 'HowTo',
+    name: howToName,
+    step: howToSteps,
+  };
+
+  // Append this schema to the existing structured data
+  const existingSchemaScript = document.querySelector(
+    'script[type="application/ld+json"]'
+  ) as HTMLScriptElement;
+  const existingSchema = JSON.parse(existingSchemaScript.textContent || '');
+  existingSchema['@graph'].push(howToSchema);
+
+  // Update the structured data in the document
+  existingSchemaScript.textContent = JSON.stringify(existingSchema);
 };

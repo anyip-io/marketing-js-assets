@@ -4,81 +4,77 @@ export default () => {
     return pattern.test(email);
   }
 
-  document.addEventListener('DOMContentLoaded', function () {
-    const myRange = document.getElementById('myRange') as HTMLInputElement | null;
-    if (myRange !== null) {
-      myRange.addEventListener('input', function () {
-        const stepIndex: number = parseInt(this.value, 10);
-        const values = [
-          {
-            gb: 0,
-            per_gb: 0,
-          },
-          {
-            gb: 5,
-            per_gb: 5,
-          },
-          {
-            gb: 20,
-            per_gb: 4,
-          },
-          {
-            gb: 100,
-            per_gb: 3,
-          },
-          {
-            gb: 500,
-            per_gb: 2,
-          },
-        ];
-        const value = values[stepIndex];
-        const gb: number = parseFloat(value.gb.toString());
-        const per_gb: number = parseFloat(value.per_gb.toString());
-        const total: number = gb * per_gb;
+  const myRange = document.getElementById('myRange') as HTMLInputElement | null;
+  if (myRange !== null) {
+    myRange.addEventListener('input', function () {
+      const stepIndex: number = parseInt(this.value, 10);
+      const values = [
+        {
+          gb: 0,
+          per_gb: 0,
+        },
+        {
+          gb: 5,
+          per_gb: 5,
+        },
+        {
+          gb: 20,
+          per_gb: 4,
+        },
+        {
+          gb: 100,
+          per_gb: 3,
+        },
+        {
+          gb: 500,
+          per_gb: 2,
+        },
+      ];
+      const value = values[stepIndex];
+      const gb: number = parseFloat(value.gb.toString());
+      const per_gb: number = parseFloat(value.per_gb.toString());
+      const total: number = gb * per_gb;
 
-        (document.getElementById('rangeValue') as HTMLElement).textContent = gb.toString();
-        (document.getElementById('perGb') as HTMLElement).textContent = per_gb.toString();
-        (document.getElementById('Total') as HTMLElement).textContent = total.toString();
-      });
-    }
-  });
+      (document.getElementById('rangeValue') as HTMLElement).textContent = gb.toString();
+      (document.getElementById('perGb') as HTMLElement).textContent = per_gb.toString();
+      (document.getElementById('Total') as HTMLElement).textContent = total.toString();
+    });
+  }
 
-  document.addEventListener('DOMContentLoaded', function () {
-    const buttons = document.querySelectorAll('#SliderCardBtn, #SliderCryptoBtn');
-    buttons.forEach(function (button: Element) {
-      button.addEventListener('click', function (this: HTMLElement) {
-        const type: string = this.id === 'SliderCardBtn' ? 'CARD' : 'CRYPTO';
-        const emailElement = document.getElementById('Your-Email-2') as HTMLInputElement;
-        const email: string = emailElement.value;
-        if (!isValidEmail(email)) {
-          return;
-        }
+  const buttons = document.querySelectorAll('#SliderCardBtn, #SliderCryptoBtn');
+  buttons.forEach(function (button: Element) {
+    button.addEventListener('click', function (this: HTMLElement) {
+      const type: string = this.id === 'SliderCardBtn' ? 'CARD' : 'CRYPTO';
+      const emailElement = document.getElementById('Your-Email-2') as HTMLInputElement;
+      const email: string = emailElement.value;
+      if (!isValidEmail(email)) {
+        return;
+      }
 
-        const gbValue: number = parseFloat(
-          (document.getElementById('rangeValue') as HTMLElement).textContent || '0'
-        );
+      const gbValue: number = parseFloat(
+        (document.getElementById('rangeValue') as HTMLElement).textContent || '0'
+      );
 
-        let planId = '63103059eb3fad951561ca41';
+      let planId = '63103059eb3fad951561ca41';
 
-        switch (gbValue) {
-          case 5:
-            planId = '63103059eb3fad951561ca41';
-            break;
-          case 20:
-            planId = '63103059eb3fad951561ca42';
-            break;
-          case 100:
-            planId = '63103059eb3fad951561ca43';
-            break;
-          case 500:
-            planId = '63103059eb3fad951561ca44';
-            break;
-        }
+      switch (gbValue) {
+        case 5:
+          planId = '63103059eb3fad951561ca41';
+          break;
+        case 20:
+          planId = '63103059eb3fad951561ca42';
+          break;
+        case 100:
+          planId = '63103059eb3fad951561ca43';
+          break;
+        case 500:
+          planId = '63103059eb3fad951561ca44';
+          break;
+      }
 
-        const encodedEmail: string = encodeURIComponent(email);
-        const url = `https://dashboard.anyip.io/payment?type=${type}&email=${encodedEmail}&plan_id=${planId}`;
-        window.location.href = url;
-      });
+      const encodedEmail: string = encodeURIComponent(email);
+      const url = `https://dashboard.anyip.io/payment?type=${type}&email=${encodedEmail}&plan_id=${planId}`;
+      window.location.href = url;
     });
   });
 };
