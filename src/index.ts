@@ -1,7 +1,15 @@
-import { greetUser } from '$utils/greet';
+import initPaymentSlider from '$utils/payment-slider';
+import initScrollToAnchor from '$utils/scroll-to-anchor';
+import initStructuredData from '$utils/structured-data';
+import initTopNavigationWrapper from '$utils/top-navigation-wrapper';
+import initVendors from '$utils/vendors';
 
 window.Webflow ||= [];
+
 window.Webflow.push(() => {
-  const name = 'John Doe';
-  greetUser(name);
+  initPaymentSlider();
+  initScrollToAnchor();
+  initVendors();
+  initTopNavigationWrapper();
+  initStructuredData();
 });
