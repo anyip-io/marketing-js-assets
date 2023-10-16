@@ -1,8 +1,39 @@
 export default () => {
+  let formSubmitted = false;
+
   function isValidEmail(email: string): boolean {
     const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return pattern.test(email);
   }
+
+  function displayEmailError(show: boolean): void {
+    const emailElement = document.getElementById('Your-Email-2') as HTMLInputElement;
+    const errorDiv = document.getElementById('email-error') as HTMLElement | null;
+
+    if (show) {
+      emailElement.style.border = '1px solid #cc0000';
+      if (!errorDiv) {
+        const div = document.createElement('div');
+        div.id = 'email-error';
+        div.style.color = '#cc0000';
+        div.style.paddingTop = '5px';
+        div.textContent = 'Please fill a valid email address';
+        emailElement.insertAdjacentElement('afterend', div);
+      }
+    } else {
+      emailElement.style.border = '';
+      if (errorDiv) errorDiv.remove();
+    }
+  }
+
+  const emailElement = document.getElementById('Your-Email-2') as HTMLInputElement;
+
+  emailElement.addEventListener('input', function () {
+    if (formSubmitted) {
+      const email: string = emailElement.value;
+      displayEmailError(!isValidEmail(email));
+    }
+  });
 
   const myRange = document.getElementById('myRange') as HTMLInputElement | null;
   if (myRange !== null) {
@@ -44,12 +75,17 @@ export default () => {
   const buttons = document.querySelectorAll('#SliderCardBtn, #SliderCryptoBtn');
   buttons.forEach(function (button: Element) {
     button.addEventListener('click', function (this: HTMLElement) {
+      formSubmitted = true;
+
       const type: string = this.id === 'SliderCardBtn' ? 'CARD' : 'CRYPTO';
       const emailElement = document.getElementById('Your-Email-2') as HTMLInputElement;
       const email: string = emailElement.value;
+
       if (!isValidEmail(email)) {
+        displayEmailError(true);
         return;
       }
+      displayEmailError(false);
 
       const gbValue: number = parseFloat(
         (document.getElementById('rangeValue') as HTMLElement).textContent || '0'
