@@ -28,6 +28,10 @@ export default () => {
 
   const emailElement = document.getElementById('Your-Email-2') as HTMLInputElement;
 
+  if (!emailElement) {
+    return;
+  }
+
   emailElement.addEventListener('input', function () {
     if (formSubmitted) {
       const email: string = emailElement.value;
@@ -109,7 +113,11 @@ export default () => {
       }
 
       const encodedEmail: string = encodeURIComponent(email);
-      const url = `https://dashboard.anyip.io/payment?type=${type}&email=${encodedEmail}&plan_id=${planId}`;
+
+      const visitorId =
+        typeof bentoVisitorId !== 'undefined' ? '&bento_uuid=' + bentoVisitorId() : '';
+
+      const url = `https://dashboard.anyip.io/payment?type=${type}&email=${encodedEmail}&plan_id=${planId}${visitorId}`;
       window.location.href = url;
     });
   });
