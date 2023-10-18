@@ -1,6 +1,10 @@
 export default () => {
   let formSubmitted = false;
 
+  document.getElementById('email-form')?.addEventListener('submit', (e) => {
+    e.preventDefault();
+  });
+
   function isValidEmail(email: string): boolean {
     const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return pattern.test(email);
