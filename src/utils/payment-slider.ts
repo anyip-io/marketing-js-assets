@@ -117,7 +117,7 @@ export default () => {
       const visitorId =
         typeof bentoVisitorId !== 'undefined' ? '&bento_uuid=' + bentoVisitorId() : '';
 
-      const url = `https://dashboard.anyip.io/payment?type=${type}&email=${encodedEmail}&plan_id=${planId}${visitorId}`;
+      const url = `https://dashboard.anyip.io/account/register?type=${type}&email=${encodedEmail}&plan_id=${planId}${visitorId}`;
       window.location.href = url;
     });
   });
