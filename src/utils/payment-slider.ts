@@ -26,16 +26,66 @@ export default () => {
     }
   }
 
+  function handleButtonClick(event: Event | null, type?: string): void {
+    formSubmitted = true;
+
+    if (event !== null) {
+      const buttonElement = event.currentTarget as HTMLElement;
+      type = buttonElement.id === 'SliderCardBtn' ? 'CARD' : 'CRYPTO';
+    }
+
+    const emailElement = document.getElementById('Your-Email-2') as HTMLInputElement;
+    const email: string = emailElement.value;
+
+    if (!isValidEmail(email)) {
+      displayEmailError(true);
+      return;
+    }
+    displayEmailError(false);
+
+    const gbValue: number = parseFloat(
+      (document.getElementById('rangeValue') as HTMLElement).textContent || '0'
+    );
+
+    let planId = '63103059eb3fad951561ca41';
+
+    switch (gbValue) {
+      case 5:
+        planId = '63103059eb3fad951561ca41';
+        break;
+      case 20:
+        planId = '63103059eb3fad951561ca42';
+        break;
+      case 100:
+        planId = '63103059eb3fad951561ca43';
+        break;
+      case 500:
+        planId = '63103059eb3fad951561ca44';
+        break;
+    }
+
+    const encodedEmail: string = encodeURIComponent(email);
+
+    const visitorId =
+      typeof bentoVisitorId !== 'undefined' ? '?bento_uuid=' + bentoVisitorId() : '';
+
+    const url = `https://dashboard.anyip.io/account${visitorId}#/register?payment_method=${type}&email=${encodedEmail}&plan_id=${planId}&submit=true`;
+    window.location.href = url;
+  }
+
+  function handleFormSubmit(event: Event): false {
+    event.preventDefault();
+    handleButtonClick(null, 'CARD');
+    return false;
+  }
+
   const emailElement = document.getElementById('Your-Email-2') as HTMLInputElement;
 
   if (!emailElement) {
     return;
   }
 
-  $('#email-form').submit((e) => {
-    e.preventDefault();
-    return false;
-  });
+  $('#email-form').submit(handleFormSubmit);
 
   emailElement.addEventListener('input', function () {
     if (formSubmitted) {
@@ -82,48 +132,7 @@ export default () => {
   }
 
   const buttons = document.querySelectorAll('#SliderCardBtn, #SliderCryptoBtn');
-  buttons.forEach(function (button: Element) {
-    button.addEventListener('click', function (this: HTMLElement) {
-      formSubmitted = true;
-
-      const type: string = this.id === 'SliderCardBtn' ? 'CARD' : 'CRYPTO';
-      const emailElement = document.getElementById('Your-Email-2') as HTMLInputElement;
-      const email: string = emailElement.value;
-
-      if (!isValidEmail(email)) {
-        displayEmailError(true);
-        return;
-      }
-      displayEmailError(false);
-
-      const gbValue: number = parseFloat(
-        (document.getElementById('rangeValue') as HTMLElement).textContent || '0'
-      );
-
-      let planId = '63103059eb3fad951561ca41';
-
-      switch (gbValue) {
-        case 5:
-          planId = '63103059eb3fad951561ca41';
-          break;
-        case 20:
-          planId = '63103059eb3fad951561ca42';
-          break;
-        case 100:
-          planId = '63103059eb3fad951561ca43';
-          break;
-        case 500:
-          planId = '63103059eb3fad951561ca44';
-          break;
-      }
-
-      const encodedEmail: string = encodeURIComponent(email);
-
-      const visitorId =
-        typeof bentoVisitorId !== 'undefined' ? '?bento_uuid=' + bentoVisitorId() : '';
-
-      const url = `https://dashboard.anyip.io/account${visitorId}#/register?payment_method=${type}&email=${encodedEmail}&plan_id=${planId}&submit=true`;
-      window.location.href = url;
-    });
+  buttons.forEach((button: Element) => {
+    button.addEventListener('click', (event) => handleButtonClick(event));
   });
 };
