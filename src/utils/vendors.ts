@@ -35,7 +35,7 @@ const loadScript = (
 };
 
 export default () => {
-    loadScript("https://ab.anyips.biz/c8f1fa765828a5914ee25b321165dc54.js", true, "text/javascript")
+    loadScript("https://ab.anyip.io/c8f1fa765828a5914ee25b321165dc54.js", true, "text/javascript")
     .then(() => {
       // Execute the corresponding code for the first script
       window.addEventListener("bento:ready", function () {
