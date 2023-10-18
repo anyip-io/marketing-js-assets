@@ -115,9 +115,9 @@ export default () => {
       const encodedEmail: string = encodeURIComponent(email);
 
       const visitorId =
-        typeof bentoVisitorId !== 'undefined' ? '&bento_uuid=' + bentoVisitorId() : '';
+        typeof bentoVisitorId !== 'undefined' ? '?bento_uuid=' + bentoVisitorId() : '';
 
-      const url = `https://dashboard.anyip.io/account/register?type=${type}&email=${encodedEmail}&plan_id=${planId}${visitorId}`;
+      const url = `https://dashboard.anyip.io/account${visitorId}#/register?type=${type}&email=${encodedEmail}&plan_id=${planId}`;
       window.location.href = url;
     });
   });
