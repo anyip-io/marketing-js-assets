@@ -1,10 +1,6 @@
 export default () => {
   let formSubmitted = false;
 
-  document.getElementById('email-form')?.addEventListener('submit', (e) => {
-    e.preventDefault();
-  });
-
   function isValidEmail(email: string): boolean {
     const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return pattern.test(email);
@@ -35,6 +31,11 @@ export default () => {
   if (!emailElement) {
     return;
   }
+
+  $('#email-form').submit((e) => {
+    e.preventDefault();
+    return false;
+  });
 
   emailElement.addEventListener('input', function () {
     if (formSubmitted) {
