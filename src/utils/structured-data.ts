@@ -143,7 +143,10 @@ export default () => {
     'script[type="application/ld+json"]'
   ) as HTMLScriptElement;
   const existingSchema = JSON.parse(existingSchemaScript.textContent || '');
-  existingSchema['@graph'].push(howToSchema);
+
+  if (howToSchema.step.length > 0) {
+    existingSchema['@graph'].push(howToSchema);
+  }
 
   // Update the structured data in the document
   existingSchemaScript.textContent = JSON.stringify(existingSchema);
