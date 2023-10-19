@@ -1,0 +1,9 @@
+#toc .active{
+	border-left-color: #e21386;
+}
+
+.table-of-rich-content .w-richtext td,
+.table-of-rich-content .w-richtext th {
+	padding: 10px;
+  border: 1px solid #ccc;
+}
