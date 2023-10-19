@@ -1,3 +1,4 @@
+import initMetaTags from '$utils/meta-tags';
 import initPaymentSlider from '$utils/payment-slider';
 import initScrollToAnchor from '$utils/scroll-to-anchor';
 import initStructuredData from '$utils/structured-data';
@@ -7,6 +8,7 @@ import initVendors from '$utils/vendors';
 window.Webflow ||= [];
 
 window.Webflow.push(() => {
+  initMetaTags();
   initPaymentSlider();
   initScrollToAnchor();
   initVendors();
