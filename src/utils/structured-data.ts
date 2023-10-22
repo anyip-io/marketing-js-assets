@@ -68,8 +68,10 @@ export default () => {
     });
   });
 
-  // Add the FAQPage structured data to the existing structured data
-  structuredData['@graph'].push(faqStructuredData);
+  if (faqStructuredData.mainEntity.length > 0) {
+    // Add the FAQPage structured data to the existing structured data
+    structuredData['@graph'].push(faqStructuredData);
+  }
 
   // Update the structured data script in the DOM
   structuredDataScript.textContent = JSON.stringify(structuredData);
