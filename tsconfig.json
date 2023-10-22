@@ -1,11 +1,12 @@
 {
   "extends": "@finsweet/tsconfig",
   "compilerOptions": {
-    "target": "es2015",
+    "target": "es2016",
     "rootDir": ".",
     "baseUrl": "./",
     "paths": {
-      "$utils/*": ["src/utils/*"]
+      "$utils/*": ["src/utils/*"],
+      "$helpers/*": ["src/helpers/*"]
     },
     "types": ["@finsweet/ts-utils", "./types"]
   }

@@ -1,38 +1,9 @@
 /* eslint-disable */
 // @ts-nocheck
 
-const loadScript = (
-  FILE_URL: string,
-  async = true,
-  type = 'text/javascript'
-): Promise<{ status: boolean; message?: string }> => {
-  return new Promise((resolve, reject) => {
-    try {
-      const scriptEle = document.createElement('script');
-      scriptEle.type = type;
-      scriptEle.async = async;
-      scriptEle.src = FILE_URL;
+import loadScript from "$helpers/load-script";
 
-      scriptEle.addEventListener('load', () => {
-        resolve({ status: true });
-      });
 
-      scriptEle.addEventListener('error', () => {
-        reject({
-          status: false,
-          message: `Failed to load the script ${FILE_URL}`,
-        });
-      });
-
-      document.body.appendChild(scriptEle);
-    } catch (error) {
-      reject({
-        status: false,
-        message: `An error occurred while loading the script ${FILE_URL}`,
-      });
-    }
-  });
-};
 
 export default () => {
     const bentoInit = () => {
