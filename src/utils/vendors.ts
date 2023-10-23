@@ -7,21 +7,21 @@ import loadScript from "$helpers/load-script";
 
 export default () => {
     const bentoInit = () => {
-      bento$(function() {
-        bento.trackSubdomains(['dashboard.anyip.io']);
-        bento.showChat();
-        bento.view();
-      });
+      if (typeof(bento$) !== 'undefined') {
+        bento$(function() {
+          bento.trackSubdomains(['dashboard.anyip.io']);
+          bento.showChat();
+          bento.view();
+        });
+      }
     }
     loadScript("https://ab.anyip.io/c8f1fa765828a5914ee25b321165dc54.js", true, "text/javascript")
     .then(() => {
-      if (typeof(bento$) !== 'undefined') {
+      bentoInit();
+
+      window.addEventListener("bento:ready", function () {
         bentoInit();
-      } else {
-        window.addEventListener("bento:ready", function () {
-          bentoInit();
-        });
-      }
+      });
     })
     .catch((error) => {});
   
