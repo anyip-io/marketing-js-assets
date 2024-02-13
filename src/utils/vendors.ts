@@ -26,7 +26,7 @@ export default () => {
     .catch((error) => {});
   
   // @ts-nocheck
-  loadScript("https://script.tapfiliate.com/tapfiliate.js", true, "text/javascript")
+  loadScript("https://af.anyip.io/tapfiliate.js", true, "text/javascript")
     .then(() => {
       
       (function(t: any, a: string, p: any) {
