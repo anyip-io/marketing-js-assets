@@ -87,7 +87,9 @@ class ImageZoom {
   }
 }
 
-document.querySelectorAll('.blog-details-rich-content img').forEach((img) => {
-  // @ts-ignore
-  new ImageZoom(img);
-});
+export default () => {
+  document.querySelectorAll('.blog-details-rich-content img').forEach((img) => {
+    // @ts-ignore
+    new ImageZoom(img);
+  });
+};
