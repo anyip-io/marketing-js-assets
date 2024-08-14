@@ -6,7 +6,7 @@
 Image Zoom JS v0.0.1 | MIT License | https://github.com/alecrios/image-zoom-js
 ============================================================================= */
 
-[data-zoom-backdrop] {
+.blog-details-rich-content img[data-zoom-backdrop] {
   position: fixed;
   top: 0;
   left: 0;
@@ -19,7 +19,7 @@ Image Zoom JS v0.0.1 | MIT License | https://github.com/alecrios/image-zoom-js
   pointer-events: none;
 }
 
-[data-zoom-backdrop='active'] {
+.blog-details-rich-content img[data-zoom-backdrop='active'] {
   opacity: 1;
   pointer-events: auto;
 }
@@ -32,7 +32,7 @@ Image Zoom JS v0.0.1 | MIT License | https://github.com/alecrios/image-zoom-js
   cursor: zoom-in;
 }
 
-[data-zoom-image='active'] {
+.blog-details-rich-content img[data-zoom-image='active'] {
   z-index: 1000;
   cursor: zoom-out;
 }
