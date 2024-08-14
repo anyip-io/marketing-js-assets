@@ -40,7 +40,7 @@ function handleSearchInput(): void {
       showSearchResults();
 
       // Trigger Jetboost search (replace 'your-jetboost-widget-id' with your actual ID)
-      window.jetboost.search('your-jetboost-widget-id', searchInput.value.trim());
+      window.jetboost.search('search', searchInput.value.trim());
     } else {
       // When the search input is empty
       showDefaultView();
