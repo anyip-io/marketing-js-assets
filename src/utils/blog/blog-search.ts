@@ -38,9 +38,6 @@ function handleSearchInput(): void {
     if (searchInput.value.trim() !== '') {
       // When there is text in the search input
       showSearchResults();
-
-      // Trigger Jetboost search (replace 'your-jetboost-widget-id' with your actual ID)
-      window.jetboost.search('search', searchInput.value.trim());
     } else {
       // When the search input is empty
       showDefaultView();
