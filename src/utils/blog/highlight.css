@@ -27,7 +27,7 @@
 
 .inline-code {
   background: rgba(135, 131, 120, 0.15);
-  color: #eb5757;
+  color: #eb5757 !important;
   border-radius: 4px;
   font-size: 85%;
   padding: 0.2em 0.4em;
