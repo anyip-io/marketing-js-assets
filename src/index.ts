@@ -1,3 +1,4 @@
+import initAdsIdentifiers from '$utils/ads-identifiers';
 import initMetaTags from '$utils/meta-tags';
 import initPaymentSlider from '$utils/payment-slider';
 import initScrollToAnchor from '$utils/scroll-to-anchor';
@@ -9,6 +10,7 @@ window.Webflow ||= [];
 
 window.Webflow.push(() => {
   initMetaTags();
+  initAdsIdentifiers();
   initPaymentSlider();
   initScrollToAnchor();
   initVendors();
