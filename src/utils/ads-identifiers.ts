@@ -1,21 +1,10 @@
-interface AdRecord {
-  value: string;
-  expiryDate: number;
-}
-
 interface AdIdentifiers {
-  [key: string]: AdRecord;
+  [key: string]: string;
 }
 
 function getParam(p: string): string | null {
   const match = RegExp('[?&]' + p + '=([^&]*)').exec(window.location.search);
   return match ? decodeURIComponent(match[1].replace(/\+/g, ' ')) : null;
-}
-
-function getExpiryRecord(value: string): AdRecord {
-  const expiryPeriod = 90 * 24 * 60 * 60 * 1000; // 90 day expiry in milliseconds
-  const expiryDate = new Date().getTime() + expiryPeriod;
-  return { value, expiryDate };
 }
 
 function getDomain(): string {
@@ -50,14 +39,14 @@ function getAdIdentifiersFromCookie(): AdIdentifiers | null {
 }
 
 export default () => {
-  const adParams = ['gclid', 'gbraid', 'wbraid', 'mscklid'];
+  const adParams = ['gclid', 'gbraid', 'wbraid', 'msclkid'];
 
   const identifiers = getAdIdentifiersFromCookie() || {};
 
   adParams.forEach((param) => {
     const value = getParam(param);
     if (value) {
-      identifiers[param] = getExpiryRecord(value);
+      identifiers[param] = value;
     }
   });
 
