@@ -1,13 +1,13 @@
 export default (
   FILE_URL: string,
-  async = true,
+  defer = true,
   type = 'text/javascript'
 ): Promise<{ status: boolean; message?: string }> => {
   return new Promise((resolve, reject) => {
     try {
       const scriptEle = document.createElement('script');
       scriptEle.type = type;
-      scriptEle.async = async;
+      scriptEle.defer = defer;
       scriptEle.src = FILE_URL;
 
       scriptEle.addEventListener('load', () => {
