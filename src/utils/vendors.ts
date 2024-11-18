@@ -2,6 +2,7 @@
 // @ts-nocheck
 
 import loadScript from "$helpers/load-script";
+import Intercom from '@intercom/messenger-js-sdk';
 
 
 
@@ -10,7 +11,6 @@ export default () => {
       if (typeof(bento$) !== 'undefined') {
         bento$(function() {
           bento.trackSubdomains(['dashboard.anyip.io']);
-          bento.showChat();
           bento.view();
         });
       }
@@ -40,4 +40,8 @@ export default () => {
       tap('detect');
     })
     .catch((error) => {});
+  
+    Intercom({
+      app_id: 'kmr9mom2',
+    }); 
 };
