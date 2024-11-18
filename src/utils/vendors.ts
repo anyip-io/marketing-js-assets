@@ -2,7 +2,6 @@
 // @ts-nocheck
 
 import loadScript from "$helpers/load-script";
-import Intercom from '@intercom/messenger-js-sdk';
 
 
 
@@ -41,7 +40,4 @@ export default () => {
     })
     .catch((error) => {});
   
-    Intercom({
-      app_id: 'kmr9mom2',
-    }); 
 };
