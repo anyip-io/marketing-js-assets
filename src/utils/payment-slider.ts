@@ -69,7 +69,7 @@ export default () => {
     const visitorId =
       typeof bentoVisitorId !== 'undefined' ? '?bento_uuid=' + bentoVisitorId() : '';
 
-    const url = `https://dashboard.anyip.io/account${visitorId}#/register?email=${encodedEmail}&submit=true`;
+    const url = `https://anyip.io/account${visitorId}#/register?email=${encodedEmail}&submit=true`;
     window.location.href = url;
   }
 

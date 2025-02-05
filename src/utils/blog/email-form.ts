@@ -8,7 +8,7 @@ export default () => {
       const visitorId: string =
         typeof bentoVisitorId !== 'undefined' ? '&bento_uuid=' + bentoVisitorId() : '';
       window.location.href =
-        'https://dashboard.anyip.io/account${visitorId}#/register?email=' +
+        'https://anyip.io/account${visitorId}#/register?email=' +
         (form.querySelector('#Blog-Email') as HTMLInputElement).value;
       return false;
     },
