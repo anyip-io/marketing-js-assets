@@ -1,3 +1,7 @@
+import posthog from 'posthog-js';
+
+import { trackEvent } from './posthog';
+
 export default () => {
   let formSubmitted = false;
 
@@ -32,6 +36,8 @@ export default () => {
     if (event !== null) {
       const buttonElement = event.currentTarget as HTMLElement;
       type = buttonElement.id === 'SliderCardBtn' ? 'CARD' : 'CRYPTO';
+    } else {
+      type = 'CARD';
     }
 
     const emailElement = document.getElementById('Your-Email-2') as HTMLInputElement;
@@ -46,6 +52,31 @@ export default () => {
     const gbValue: number = parseFloat(
       (document.getElementById('rangeValue') as HTMLElement).textContent || '0'
     );
+    const pricePerGb: number = parseFloat(
+      (document.getElementById('perGb') as HTMLElement).textContent || '0'
+    );
+    const total: number = parseFloat(
+      (document.getElementById('Total') as HTMLElement).textContent || '0'
+    );
+
+    // Register super properties
+    posthog.register({
+      email,
+      signup_method: type,
+    });
+
+    // Track the purchase event before redirecting with profile properties
+    trackEvent('purchase_with_card_crypto_clicked', {
+      gigabyte: gbValue,
+      total,
+      price_per_gb: pricePerGb,
+      cta_clicked: `purchase with ${type.toLowerCase()}`,
+      before_or_after_sign_up: 'Before',
+      $set: {
+        email,
+        signup_method: type,
+      },
+    });
 
     let planId = '63103059eb3fad951561ca41';
 

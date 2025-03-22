@@ -54,8 +54,10 @@
   "dependencies": {
     "@finsweet/ts-utils": "^0.39.2",
     "@intercom/messenger-js-sdk": "^0.0.14",
+    "@types/node": "^22.13.11",
     "highlight.js": "^11.9.0",
-    "highlightjs-copy": "^1.0.5"
+    "highlightjs-copy": "^1.0.5",
+    "posthog-js": "^1.232.4"
   },
   "engines": {
     "pnpm": ">=8"
