@@ -34,12 +34,12 @@ function parseTrackingData(element: HTMLElement): Record<string, string> | null 
 
 // Function to get event name based on URL
 function getEventNameForUrl(url: string): string | null {
-  if (url === 'https://calendly.com/ben-anyip/30min') {
+  if (url.startsWith('https://meeting.anyip.io/meetings/benj/demo-call')) {
     return 'book_demo_click';
   }
   if (
-    url === 'https://anyip.io/account/register' ||
-    url === 'https://anyip.io/account/#/register'
+    url.startsWith('https://anyip.io/account/register') ||
+    url.startsWith('https://anyip.io/account/#/register')
   ) {
     return 'go_to_sign_up_page_click';
   }
