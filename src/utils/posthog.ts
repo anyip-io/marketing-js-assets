@@ -1,5 +1,12 @@
 import posthog from 'posthog-js';
 
+// Declare PostHog on window object
+declare global {
+  interface Window {
+    posthog: typeof posthog;
+  }
+}
+
 // Initialize PostHog with your project API key
 const POSTHOG_API_KEY = 'phc_EkLFWyh0N4wohGdk6U1nWfi0mtFaMmQZLeIgkIs1VvZ'; // Replace with your actual PostHog API key
 const POSTHOG_HOST = 'https://ph.anyip.io'; // Replace with your PostHog host URL
@@ -10,6 +17,9 @@ export function initPostHog() {
     posthog.init(POSTHOG_API_KEY, {
       api_host: POSTHOG_HOST,
     });
+
+    // Attach PostHog to window object
+    window.posthog = posthog;
   }
 }
 
